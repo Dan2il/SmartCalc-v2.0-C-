@@ -1,3 +1,4 @@
+#include <iostream>
 #include <list>
 #include <string>
 #include <string_view>
@@ -28,8 +29,14 @@ class Model {
   ErrorsType CheckCorrectExpression(const std::string& expression);
 
   //   const std::string GetStringInfixExpresson();
-  //   const std::list<double> GetInfixExpression();
+  // const std::list<double>& GetInfixExpression();
   //   const std::list<double> GetRPNExpression();
+
+  void PrintInfix() {
+    for (auto lex : infix_expression) {
+      std::cout << lex << std::endl;
+    }
+  }
 
   void Clear();
 
@@ -37,7 +44,7 @@ class Model {
 
  private:
   std::string expression_;
-  std::list<double> infix_expression;
+  std::list<std::string_view> infix_expression;
   std::list<double> RPN_expression_;
   std::list<double> buffer_steck_;
   double result_expression_;

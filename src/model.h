@@ -33,6 +33,7 @@ class Model {
   //   const std::list<double> GetRPNExpression();
 
   void PrintInfix() {
+    std::cout << "PrintInfix" << std::endl;
     for (auto lex : infix_expression) {
       std::cout << lex << std::endl;
     }
@@ -48,5 +49,14 @@ class Model {
   std::list<double> RPN_expression_;
   std::list<double> buffer_steck_;
   double result_expression_;
+
+  bool CheckNumber(const size_t counter_row);
+  bool CheckBrackets(const size_t counter_row);
+  bool CheckOperator(const size_t counter_row);
+  bool CheckMod(const size_t counter_row);
+  bool CheckFunction(const size_t counter_row);
+
+  std::string_view GetNumber(size_t& counter_row);
+  std::string_view(GetBrackets(size_t& counter_row));
 };
 }  // namespace s21

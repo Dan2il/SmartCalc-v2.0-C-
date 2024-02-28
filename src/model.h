@@ -22,6 +22,8 @@ class Model {
   Model() = default;
 
   ErrorsType ConvertStrExpressionToList(const std::string& expression);
+  ErrorsType ConvertStrExpressionToRPN(const std::string& pars_expr);
+
   ErrorsType InfixExpressionToRPN();
 
   ErrorsType SetExpression(std::string& expression);
@@ -39,6 +41,7 @@ class Model {
     }
   }
 
+  const std::list<std::string_view>& GetInfixExpression();
   void Clear();
 
   ~Model() = default;
@@ -46,8 +49,8 @@ class Model {
  private:
   std::string expression_;
   std::list<std::string_view> infix_expression;
-  std::list<double> RPN_expression_;
-  std::list<double> buffer_steck_;
+  std::list<std::string_view> RPN_expression_;
+  std::list<std::string_view> buffer_steck_;
   double result_expression_;
 
   bool CheckNumber(const size_t counter_row);
@@ -55,8 +58,10 @@ class Model {
   bool CheckOperator(const size_t counter_row);
   bool CheckMod(const size_t counter_row);
   bool CheckFunction(const size_t counter_row);
+  bool CheckLongFunction(const size_t counter_row);
+  bool CheckX(const size_t counter_row);
 
   std::string_view GetNumber(size_t& counter_row);
-  std::string_view(GetBrackets(size_t& counter_row));
+  std::string_view GetLexems(size_t& counter_row, const size_t size_lexems);
 };
 }  // namespace s21

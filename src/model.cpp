@@ -115,6 +115,7 @@ s21::ErrorsType s21::Model::ConvertStrExpressionToList(
 s21::ErrorsType s21::Model::ConvertStrExpressionToRPN(
     const std::string& pars_expr) {
   this->expression_ = pars_expr;
+  int counter_brackets = 0;
   for (size_t counter_row = 0; counter_row < this->expression_.length();
        ++counter_row) {
     if (CheckNumber(counter_row)) {
@@ -132,7 +133,22 @@ s21::ErrorsType s21::Model::ConvertStrExpressionToRPN(
       counter_row += 1;
     } else if (this->expression_[counter_row] == 40) {
       this->buffer_steck_.push_front(GetLexems(counter_row, 1));
+      counter_brackets += 1;
     } else if (this->expression_[counter_row] == 41) {
+      if (!counter_brackets) {
+        return ErrorsType::ERROR_BRACKETS;
+      } else {
+        while (!buffer_steck_.empty() && buffer_steck_.front() != "(") {
+          if (buffer_steck_.front() != "(") {
+            RPN_expression_.push_back(buffer_steck_.front());
+            buffer_steck_.pop_front();
+          } else {
+            counter_brackets -= 1;
+            break;
+          }
+        }
+      }
+    } else if (CheckOperator(counter_row)) {
       //
     }
   }

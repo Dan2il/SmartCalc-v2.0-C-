@@ -9,6 +9,7 @@ typedef enum {
   NO_ERRORS,
   NULL_POINTER,
   READ_INCORRECT_SYMBOL,
+  ERROR_BRACKETS,
   INCORRECT_DATA,
   EMPTY_EXPRESSION,
   LONG_EXPRESSION,
@@ -16,6 +17,30 @@ typedef enum {
   COMPRASSION_ERROR,
   OTHER_ERROR
 } ErrorsType;
+
+// typedef struct {
+//   //
+// } Priorities;
+
+typedef enum {
+  ADD = 2,
+  SUB = 2,
+  MUL = 3,
+  DIV = 3,
+  MOD = 3,
+  POW = 4,
+  UPLUS = 4,
+  UMIN = 4,
+  COS = 4,
+  SIN = 4,
+  TAN = 4,
+  ACOS = 4,
+  ASIN = 4,
+  ATAN = 4,
+  SQRT = 4,
+  LN = 4,
+  LOG = 4
+} Priorities;
 
 class Model {
  public:

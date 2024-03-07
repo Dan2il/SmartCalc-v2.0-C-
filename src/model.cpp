@@ -66,7 +66,7 @@ bool s21::Model::CheckX(const size_t counter_row) {
   return false;
 }
 
-std::string_view s21::Model::GetNumber(size_t& counter_row) {
+s21::Lexem s21::Model::GetNumber(size_t& counter_row) {
   int start_counter = counter_row;
   int counter_symbol = 0;
   while (this->expression_[counter_row] > 47 &&
@@ -75,13 +75,26 @@ std::string_view s21::Model::GetNumber(size_t& counter_row) {
     counter_symbol++;
   }
   counter_row--;
-  return std::string_view(this->expression_)
-      .substr(start_counter, counter_symbol);
+  Lexem lex = {
+      std::string_view(this->expression_).substr(start_counter, counter_symbol),
+      Priorities::OTHER};
+
+  return {
+      std::string_view(this->expression_).substr(start_counter, counter_symbol),
+      Priorities::OTHER};
 }
 
-std::string_view s21::Model::GetLexems(size_t& counter_row,
-                                       const size_t size_lexems) {
-  return std::string_view(expression_).substr(counter_row, size_lexems);
+s21::Lexem s21::Model::GetLexems(size_t& counter_row,
+                                 const size_t size_lexems) {
+  Lexem lex = {std::string_view(expression_).substr(counter_row, size_lexems),
+               Priorities::OTHER};
+  return lex;
+}
+
+int s21::Model::GetPriorities(const std::string_view lex) {
+  if (lex == "+" || lex == "-") {
+    return 2;
+  }
 }
 
 s21::ErrorsType s21::Model::ConvertStrExpressionToList(

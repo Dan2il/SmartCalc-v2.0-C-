@@ -18,11 +18,8 @@ typedef enum {
   OTHER_ERROR
 } ErrorsType;
 
-// typedef struct {
-//   //
-// } Priorities;
-
 typedef enum {
+  OTHER = -1,
   ADD = 2,
   SUB = 2,
   MUL = 3,
@@ -41,6 +38,11 @@ typedef enum {
   LN = 4,
   LOG = 4
 } Priorities;
+
+typedef struct {
+  std::string_view lex;
+  Priorities priority;
+} Lexem;
 
 class Model {
  public:
@@ -74,7 +76,7 @@ class Model {
  private:
   std::string expression_;
   std::list<std::string_view> infix_expression;
-  std::list<std::string_view> RPN_expression_;
+  std::list<Lexem> RPN_expression_;
   std::list<std::string_view> buffer_steck_;
   double result_expression_;
 
@@ -86,7 +88,9 @@ class Model {
   bool CheckLongFunction(const size_t counter_row);
   bool CheckX(const size_t counter_row);
 
-  std::string_view GetNumber(size_t& counter_row);
-  std::string_view GetLexems(size_t& counter_row, const size_t size_lexems);
+  Lexem GetNumber(size_t& counter_row);
+  Lexem GetLexems(size_t& counter_row, const size_t size_lexems);
+
+  int GetPriorities(const std::string_view lex);
 };
 }  // namespace s21
